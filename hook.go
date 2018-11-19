@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
-	"github.com/kataras/iris"
 	"gopkg.in/go-playground/webhooks.v5/github"
 )
 
@@ -42,38 +40,7 @@ func main() {
 			fmt.Printf("%+v", pullRequest)
 		}
 	})
-	http.ListenAndServe(":3000", nil)
-}
-
-func main2() {
-
-	addr := addr()
-
-	app := iris.Default()
-
-	app.Logger().SetLevel("debug")
-
-	// https://github.com/go-playground/webhooks
-
-	app.Post("/", func(ctx iris.Context) {
-
-		app.Logger().Debug("~~~~~~~~~~~~~~~~~~~~ ctx.Path: " + ctx.Path())
-
-		var user User
-		if err := ctx.ReadJSON(&user); err != nil {
-			app.Logger().Error("1111111111111111111111")
-			app.Logger().Error(err.Error())
-		}
-
-		t := time.Now().Format("20060102150405")
-
-		ctx.JSON(iris.Map{
-			"pong": t,
-			"user": user,
-		})
-	})
-
-	app.Run(iris.Addr(addr))
+	http.ListenAndServe(addr(), nil)
 }
 
 func addr() string {
@@ -89,5 +56,6 @@ func addr() string {
 		addr = os.Args[1]
 	}
 
+	fmt.Printf("%s", addr)
 	return addr
 }

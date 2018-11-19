@@ -1,7 +1,9 @@
-FROM ubuntu:18.04
+FROM golang:1.11.1-stretch
 
-ADD pong /pong
+RUN apt-get update && apt-get install -y libgtk-3-dev libappindicator3-dev
 
-ENV PONG_LISTENING_ADDRESS=":80"
+ADD entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT /pong
+RUN chmod 755 /entrypoint.sh
+
+ENTRYPOINT /entrypoint.sh

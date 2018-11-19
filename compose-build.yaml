@@ -1,0 +1,13 @@
+---
+version: "2"
+services:
+
+  go-builder:
+    build: .
+    image: go-builder
+    working_dir: /go/src/github.com/ludenus/hook
+    volumes:
+      - ./:/go/src/github.com/ludenus/hook
+    environment:
+      HOOK_LISTENING_ADDRESS: "${HOOK_LISTENING_ADDRESS}"
+      
