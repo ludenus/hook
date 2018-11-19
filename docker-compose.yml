@@ -1,0 +1,9 @@
+---
+version: "2"
+services:
+  pong:
+    image: "ludenus/pong:0.0.1"
+    ports:
+      - "8111:80"
+    environment:
+      PONG_LISTENING_ADDRESS: ":80"
