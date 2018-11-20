@@ -16,10 +16,11 @@ func main() {
 	hook, _ := github.New(github.Options.Secret(secret()))
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		fmt.Printf(".")
 		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent)
 		if err != nil {
 			if err == github.ErrEventNotFound {
-				// ok event wasn;t one of the ones asked to be parsed
+				fmt.Println("ok event wasn;t one of the ones asked to be parsed")
 			}
 		}
 		switch payload.(type) {
