@@ -12,13 +12,8 @@ const (
 	path = "/webhooks"
 )
 
-type User struct {
-	FirstName string `json:"fname"`
-	LastName  string `json:"lname"`
-}
-
 func main() {
-	hook, _ := github.New(github.Options.Secret("MyGitHubSuperSecretSecrect...?"))
+	hook, _ := github.New(github.Options.Secret(secret()))
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent)
@@ -58,4 +53,15 @@ func addr() string {
 
 	fmt.Printf("%s", addr)
 	return addr
+}
+
+func secret() string {
+
+	secret := os.Getenv("HOOK_SECRET")
+
+	if secret == "" {
+		panic("ERROR: HOOK_SECRET environment variable is not set")
+	}
+
+	return secret
 }
