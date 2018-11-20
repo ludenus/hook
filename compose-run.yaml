@@ -1,7 +1,7 @@
 ---
 version: "2"
 services:
-  pong:
+  hook:
     image: "ludenus/hook:0.0.1"
     ports:
       - "8111:80"
