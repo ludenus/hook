@@ -3,7 +3,7 @@ bitbucket webhook handler
 
 ## how to build
 ```
-$ docker-compose -f build.yaml build
-$ docker-compose -f build.yaml up
+$ docker-compose -f compose-build.yaml build
+$ docker-compose -f compose-build.yaml up
 ```
 ./hook binary should appear
