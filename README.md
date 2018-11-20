@@ -1,5 +1,5 @@
 # hook
-bitbucket webhook handler
+github webhook handler
 
 ## how to build
 ```
