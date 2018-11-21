@@ -16,7 +16,7 @@ func main() {
 	hook, _ := github.New(github.Options.Secret(secret()))
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		
+
 		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent, github.PushEvent)
 		if err != nil {
 			if err == github.ErrEventNotFound {

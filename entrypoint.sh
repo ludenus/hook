@@ -9,6 +9,8 @@ go version
 
 go get ./...
 
+go fmt ./
+
 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -v github.com/ludenus/hook 
 
 chmod 777 ./hook
