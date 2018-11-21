@@ -16,24 +16,28 @@ func main() {
 	hook, _ := github.New(github.Options.Secret(secret()))
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		fmt.Printf(".")
-		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent)
+		
+		payload, err := hook.Parse(r, github.ReleaseEvent, github.PullRequestEvent, github.PushEvent)
 		if err != nil {
 			if err == github.ErrEventNotFound {
-				fmt.Println("ok event wasn;t one of the ones asked to be parsed")
+				fmt.Printf("received event is NOT to be parsed: %+v\n", r)
+			} else {
+				fmt.Printf("ERROR: %+v\n", err)
 			}
 		}
-		switch payload.(type) {
 
+		switch payload.(type) {
 		case github.ReleasePayload:
 			release := payload.(github.ReleasePayload)
-			// Do whatever you want from here...
-			fmt.Printf("%+v", release)
+			fmt.Printf("release: %+v\n", release)
 
 		case github.PullRequestPayload:
 			pullRequest := payload.(github.PullRequestPayload)
-			// Do whatever you want from here...
-			fmt.Printf("%+v", pullRequest)
+			fmt.Printf("pull request: %+v\n", pullRequest)
+
+		case github.PushPayload:
+			pullRequest := payload.(github.PushPayload)
+			fmt.Printf("push: %+v\n", pullRequest)
 		}
 	})
 	http.ListenAndServe(addr(), nil)
